@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Example | React Video</title>
+    <link rel="stylesheet" href="http://necolas.github.io/normalize.css/3.0.1/normalize.css">
+    <link rel="stylesheet" href="react-video.css">
+    <style>
+      #video-youtube,
+      #video-vimeo {
+        width: 500px;
+        margin: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div id="video-youtube"></div>
+      <div id="video-vimeo"></div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react-with-addons.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/JSXTransformer.js"></script>
+    <script src="react-video.js"></script>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+      var Video = ReactVideo;
+
+      React.renderComponent(
+        <Video from='youtube' id='jhg8XRTorYg' />,
+        document.getElementById('video-youtube')
+      );
+
+      React.renderComponent(
+        <Video from='vimeo' id='108843586' />,
+        document.getElementById('video-vimeo')
+      );
+    </script>
+  </body>
+</html>

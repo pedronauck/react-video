@@ -1,0 +1,94 @@
+// ----------------------------------------------------------------------------
+//
+//  React Video
+//
+// ----------------------------------------------------------------------------
+
+.video {
+  position: relative;
+  background: #E2E2E2;
+
+  iframe {
+    border: 0;
+  }
+}
+
+// ----------------------------------------------------------------------------
+//  Video Image
+// ----------------------------------------------------------------------------
+
+.video-image {
+  margin: 0;
+  background-position: center center;
+  background-size: 100% auto;
+
+  &:after {
+    z-index: 1;
+    position: absolute;
+    display: block;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(black, .3);
+  }
+}
+
+// ----------------------------------------------------------------------------
+//  Play Button
+// ----------------------------------------------------------------------------
+
+$to-center {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.video-play-button {
+  @extends $to-center;
+  z-index: 2;
+  position: absolute;
+  padding: 0;
+  width: 70px;
+  border: 0;
+  background: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  svg {
+    fill: white;
+    -webkit-filter: drop-shadow(0 1px 1px rgba(black, .8));
+            filter: drop-shadow(0 1px 1px rgba(black, .8));
+  }
+}
+
+// ----------------------------------------------------------------------------
+//  Loading Spinner
+// ----------------------------------------------------------------------------
+
+.video-loading {
+  @extends $to-center;
+  z-index: 4;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+
+  svg {
+    fill: black;
+    transform-origin: 50% 50%;
+    -webkit-animation: spinner .8s infinite linear;
+            animation: spinner .8s infinite linear;
+  }
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
