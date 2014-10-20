@@ -2,9 +2,9 @@
 
 ![Git release](http://img.shields.io/github/release/pedronauck/react-video.svg?style=flat) ![Travis](http://img.shields.io/travis/pedronauck/react-video.svg?style=flat) ![license](http://img.shields.io/npm/l/react-video.svg?style=flat)
 
-[![NPM](https://nodei.co/npm/react-video.png)](https://nodei.co/npm/react-video/)
+![](http://f.cl.ly/items/440F3Y0w1l293g3e3g3N/cover.png)
 
-React `<Video />` component to load video from Vimeo or Youtube across any device. Inspired by [PrettyEmbed.js](https://github.com/mike-zarandona/PrettyEmbed.js)
+A pretty good way inspired by [PrettyEmbed.js](https://github.com/mike-zarandona/PrettyEmbed.js) to create a video placeholder from Youtube or Vimeo using a high-res image. This is better because you save a initial `<iframe>` request until the user press play.
 
 ## Install
 
@@ -12,12 +12,12 @@ Installing this component is very easy and it has just one dependency: [React](h
 
 - Using NPM *~the quickest way~*
 ```bash
-  $ npm install --save react-youtube
+  $ npm install --save react-video
 ```
 
 - Using Bower
 ```bash
-  $ bower install --save react-youtube
+  $ bower install --save react-video
 ```
 
 - Or if you want to [download the lastest release](https://github.com/pedronauck/react-video/archive/v0.0.1.zip) and put in your website, it will work too!
@@ -31,7 +31,19 @@ Then you're done! :smile_cat:
 Using the component is simpler than installing. See an example with [browserify](http://truongtx.me/2014/07/18/using-reactjs-with-browserify-and-gulp/) to bundle your script:
 
 ```javascript
-// browserify example here
+  var Video = require('react-video');
+
+  // Video from Youtube
+  React.renderComponent(
+    <Video from='youtube' id={videoId} />,
+    $mountNode
+  );
+
+  // Video from Vimeo
+  React.renderComponent(
+    <Video from='vimeo' id={videoId} />,
+    $mountNode
+  );
 ```
 
 If you decide to use just Javascript without any module loader, you can get the global variable `window.ReactVideo` *(or just `ReactVideo`)*:
@@ -40,11 +52,6 @@ If you decide to use just Javascript without any module loader, you can get the 
   /** @jsx React.DOM */
 
   var Video = ReactVideo;
-  var App = React.createClass({
-    render: function() {
-      ...
-    }
-  });
 ```
 
 ## Behind the Scene
@@ -54,14 +61,24 @@ There are some things that you should know about the component. The first one is
 So, the semantic HTML structure will be something like this:
 
 ```html
-  <!-- showing semantic structure -->
+  <div class='video'>
+    <div class='{from}-video'>
+      <div class='video-loading'>
+        <svg>...</svg>
+      </div>
+      <div class='video-image'>
+        <button type='button' class='video-play-button'>
+          <svg>...</svg>
+        </button>
+      </div>
+      <div class='video-embed'>
+        <iframe>...</iframe>
+      </div>
+    </div>
+  </div>
 ```
 
 This is a very simple structure to stylize however you want. So, if you are lost, don't panic, there is a [real functional example](/example) that you can follow.
-
-The other thing that I have to share with you is that the component has some properties that you can use. Example:
-
-#### TODO: Talking about component default properties
 
 For more details, check out the API below.
 
@@ -71,7 +88,8 @@ For more details, check out the API below.
 
 Property | Type | Default | Required | Description
 -------- | ---- | ------- | -------- |-----------
-propery | `Type` | 1 | no | Some description
+from | `String` | none | yes | Video source: `youtube` or `vimeo`
+id | `String` | none | yes | The video ID
 
 ## Contributing
 
