@@ -1,0 +1,69 @@
+{
+  "name": "react-video",
+  "version": "0.0.1",
+  "description": "React component to load video from Vimeo or Youtube across any device",
+  "author": {
+    "name": "Pedro Nauck",
+    "email": "pedronauck@gmail.com",
+    "url": "https://github.com/pedronauck"
+  },
+  "bugs": {
+    "url": "https://github.com/pedronauck/react-video/issues"
+  },
+  "homepage": "https://github.com/pedronauck/react-video",
+  "license": "MIT",
+  "main": "dist/react-video.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pedronauck/react-video"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "react-video",
+    "video",
+    "youtube",
+    "video",
+    "player"
+  ],
+  "scripts": {
+    "bundle": "gulp bundle",
+    "start": "gulp",
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "./utils/jsx-preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "./node_modules/react"
+    ],
+    "testFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json"
+    ]
+  },
+  "dependencies": {
+    "react": "^0.11.2"
+  },
+  "devDependencies": {
+    "browser-sync": "^1.5.2",
+    "gulp": "^3.8.6",
+    "gulp-header": "^1.2.1",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-rename": "^1.2.0",
+    "gulp-shell": "^0.2.10",
+    "gulp-stylus": "^1.3.3",
+    "gulp-util": "^3.0.1",
+    "jest-cli": "^0.1.18",
+    "jsx-loader": "^0.11.2",
+    "lodash": "^2.4.1",
+    "nib": "^1.0.4",
+    "react-tools": "^0.11.2",
+    "webpack": "^1.4.4",
+    "yargs": "^1.3.2"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "react-video",
+  "version": "0.0.1",
+  "description": "React component to load video from Vimeo or Youtube across any device",
+  "homepage": "https://github.com/pedronauck/react-video",
+  "authors": [
+    "Pedro Nauck <pedronauck@gmail.com> (https://github.com/pedronauck)"
+  ],
+  "main": "dist/react-video.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "react",
+    "react-component",
+    "react-video",
+    "video",
+    "youtube",
+    "video",
+    "player"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
