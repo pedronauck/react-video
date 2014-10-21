@@ -4,7 +4,7 @@
 
 ![](http://f.cl.ly/items/440F3Y0w1l293g3e3g3N/cover.png)
 
-A pretty good and effective way inspired by [PrettyEmbed.js](https://github.com/mike-zarandona/PrettyEmbed.js) to create a video placeholder from Youtube or Vimeo using a high-res image. This is better because you save a initial `<iframe>` request until the user press play.
+A pretty good and effective way to create a video placeholder from Youtube or Vimeo using a high-res image. This is better because you save a initial `<iframe>` request until the user press play.
 
 ## Install
 
