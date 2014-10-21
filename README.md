@@ -20,7 +20,7 @@ Installing this component is very easy and it has just one dependency: [React](h
   $ bower install --save react-video
 ```
 
-- Or if you want to [download the lastest release](https://github.com/pedronauck/react-video/archive/v1.0.1.zip) and put in your website, it will work too!
+- Or if you want to [download the lastest release](https://github.com/pedronauck/react-video/archive/v1.0.2.zip) and put in your website, it will work too!
 
 **NOTICE:** You need just one thing to make the component work. Put the [base component style](./dist/react-video.css) at the `<header>` tag. If you don't wanna use the `.css` extension, you can get the `.styl` or `.scss` extension at the folder `./lib`.
 
