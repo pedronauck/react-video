@@ -66,6 +66,11 @@ gulp.task('watch', function() {
   gulp.watch('./lib/*.styl', ['css', browserSync.reload]);
 });
 
+gulp.task('deploy', function () {
+  gulp.src('./docs/**/*')
+    .pipe(deploy(options));
+});
+
 gulp.task('bundle', shell.task([
   'gulp webpack',
   'gulp webpack -p',
