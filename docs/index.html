@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>React Video</title>
+  <link rel="stylesheet" href="http://necolas.github.io/normalize.css/3.0.1/normalize.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/pedronauck/react-video/master/dist/react-video.min.css">
+  <link rel="stylesheet" href="css/github.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="https://github.com/pedronauck/react-video"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+  <div class="header-container">
+    <header class="header">
+      <h1 class="title">React Video</h1>
+      <ul class="github-buttons">
+        <li>
+          <a href="#">Download v0.0.1</a>
+        </li>
+        <li>
+          <a href="#">
+            <!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In  -->
+            <svg version="1.1"
+               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+               x="0px" y="0px" width="26px" height="26px" viewBox="0 0 31.984 32" enable-background="new 0 0 31.984 32"
+               xml:space="preserve" fill="white">
+              <path d="M31.984,16c0,8.844-7.156,16-16,16C7.156,32,0,24.843,0,16C0,7.171,7.156,0,15.984,0C24.828,0,31.984,7.171,31.984,16z
+                 M20,29c5.5-1.812,9.484-6.938,9.484-13c0-7.453-6.047-13.5-13.5-13.5C8.547,2.5,2.5,8.546,2.5,16c0,6.062,4,11.203,9.516,13
+                v-2.547c-3.938,0.891-4.766-1.844-4.766-1.844C6.625,23,5.719,22.578,5.719,22.578c-1.266-0.859,0.094-0.844,0.094-0.844
+                c1.391,0.094,2.125,1.422,2.125,1.422c1.312,2.25,3.484,1.438,4.156,1.109c0.203-0.984,0.969-1.188,1.219-1.266
+                c-3.547-0.375-7.344-1.656-7.344-7.797c0-1.719,0.609-3.125,1.609-4.219c-0.156-0.406-0.703-2,0.156-4.172
+                c0,0,1.328-0.421,4.328,1.609C13.312,8.078,14.656,7.906,16,7.89c1.328,0.016,2.672,0.187,3.938,0.531
+                c3-2.031,4.312-1.609,4.312-1.609c0.859,2.172,0.328,3.766,0.156,4.172c1.016,1.094,1.625,2.5,1.625,4.219
+                c0,6.141-3.797,7.406-7.344,7.781C19.328,23.421,20,24.25,20,25.828V29z"/>
+            </svg>
+            Fork on Github
+          </a>
+        </li>
+      </ul>
+      <h3 class="subtitle">A pretty good and effective way to create a video placeholder from Youtube or Vimeo</h3>
+      <ul class="cover-buttons">
+        <li class="cover-button-item is-active" data-from="youtube">
+          <a href="#"><img src="images/btn-youtube.png" /></a>
+        </li>
+        <li class="cover-button-item" data-from="vimeo">
+          <a href="#"><img src="images/btn-vimeo.png" /></a>
+        </li>
+      </ul>
+      <div id="cover-video"></div>
+    </header>
+  </div>
+
+  <section class="content-section install">
+    <h2 class="section-title">Install</h2>
+    <p>
+      You need just one thing to make the component work. After <a href="https://github.com/pedronauck/react-video#install">download</a> <def>(using NPM, bower or whatever you want)</def>, put the base component style at the your page.
+    </p>
+    <pre>
+      <code class="hljs bash">
+        &lt;link rel="stylesheet" href="/path/react-video.css" /&gt;
+      </code>
+    </pre>
+  </section>
+
+  <section class="content-section usage">
+    <h2 class="section-title">Usage</h2>
+    <p>
+      Using the component is simpler than installing. See an example with browserify to bundle your script:
+    </p>
+    <pre><code class="hljs javascript">
+      /** @jsx React.DOM */
+      var Video = require('react-video');
+
+      React.renderComponent(
+        &lt;Video from='youtube' id={videoId} /&gt;,
+        document.querySelector('#your-div')
+      );
+
+      React.renderComponent(
+        &lt;Video from='vimeo' id={videoId} /&gt;,
+        document.querySelector('#your-div')
+      );
+    </code></pre>
+    <p>
+      If you decide to use just Javascript without any module loader, you can get the global variable <code>window.ReactVideo</code>:
+    </p>
+    <pre><code class="hljs javascript">
+      /** @jsx React.DOM */
+
+      var Video = ReactVideo;
+    </code></pre>
+  </section>
+
+  <footer class="footer">
+    Made with ❤︎ by <a href="http://github.com/pedronauck">Pedro Nauck</a>
+  </footer>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react-with-addons.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/JSXTransformer.js"></script>
+  <script src="//cdn.rawgit.com/pedronauck/react-video/master/dist/react-video.min.js"></script>
+  <script src="js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="js/app.js" type="text/jsx"></script>
+</body>
+</html>

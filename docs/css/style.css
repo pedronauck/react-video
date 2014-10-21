@@ -1,0 +1,143 @@
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400|Montserrat");
+
+body {
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+a {
+  color: #d35400;
+  text-decoration: none;
+}
+
+code:not(.hljs) {
+  background: #f2f2f2;
+  color: #DC2250;
+  font-size: 16px;
+  padding: 3px;
+  border-radius: 3px;
+}
+
+/* ----------------------------------------------------------------------------
+ *  Header
+ * ---------------------------------------------------------------------------*/
+
+.header-container {
+  background: #222222;
+  padding: 80px 0 0 0;
+}
+
+.header {
+  width: 960px;
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+}
+
+.header .title {
+  font-family: 'Montserrat';
+  font-size: 60px;
+  font-weight: 300;
+  margin: 0 0 40px;
+}
+
+.header .subtitle {
+  font-size: 30px;
+  font-weight: 300;
+  color: #999;
+  padding: 0 150px 70px;
+}
+
+.github-buttons {
+  padding: 0;
+  margin: 0 0 40px 0;
+  list-style: none;
+}
+
+.github-buttons li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.github-buttons li a {
+  display: inline-block;
+  padding: 20px 20px;
+  color: white;
+  font-size: 20px;
+  background: #d35400;
+  border-radius: 5px;
+}
+
+.github-buttons li a svg {
+  float: left;
+  margin-right: 10px;
+}
+
+.cover-buttons {
+  padding: 0;
+  margin: 0 0 50px 0;
+  list-style: none;
+}
+
+.cover-button-item {
+  display: inline-block;
+  margin: 0 20px;
+  opacity: .4;
+}
+
+.cover-button-item.is-active {
+  opacity: 1;
+}
+
+.cover-button-item a {
+  display: block;
+  width: 130px;
+}
+
+.cover-button-item a img {
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------------------
+ *  Content
+ * ---------------------------------------------------------------------------*/
+
+.content-section {
+  width: 800px;
+  margin: 0 auto;
+  padding: 80px 0;
+}
+
+.content-section ~ .content-section {
+  padding-top: 0;
+}
+
+.section-title {
+  font-family: "Montserrat";
+  font-size: 50px;
+  text-align: center;
+  color: #D15418;
+  margin: 0 0 30px 0;
+}
+
+.content-section p {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 0 80px;
+}
+
+.content-section pre {
+  margin-top: -10px;
+  margin-bottom: 0;
+}
+
+/* ----------------------------------------------------------------------------
+ *  Footer
+ * --------------------------------------------------------------------------*/
+
+.footer {
+  padding: 0 0 80px 0;
+  color: #ee9368;
+  text-align: center;
+}
