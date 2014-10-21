@@ -4,7 +4,7 @@
 
 ![](http://f.cl.ly/items/440F3Y0w1l293g3e3g3N/cover.png)
 
-A pretty good and effective way to create a video placeholder from Youtube or Vimeo using a high-res image. This is better because you save a initial `<iframe>` request until the user press play.
+A pretty good and effective way to create a video placeholder from Youtube or Vimeo using a high-res image. If you don't know, when an `<iframe>` is rendered from browser, it blocks its parse because it isn't a [non-blocking script](http://www.nczonline.net/blog/2010/08/10/what-is-a-non-blocking-script/). This isn't so good to your user, no?. With this react component, the `<iframe>` just will be loaded when the user click on play.
 
 ## Install
 
