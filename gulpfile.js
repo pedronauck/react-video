@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
+    deploy = require('gulp-gh-pages'),
     gutil = require('gulp-util'),
     shell = require('gulp-shell'),
     stylus = require('gulp-stylus'),
@@ -68,7 +69,7 @@ gulp.task('watch', function() {
 
 gulp.task('deploy', function () {
   gulp.src('./docs/**/*')
-    .pipe(deploy(options));
+    .pipe(deploy());
 });
 
 gulp.task('bundle', shell.task([
