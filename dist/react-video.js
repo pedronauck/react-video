@@ -63,15 +63,189 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */var React = __webpack_require__(1);
-	var classSet = __webpack_require__(2);
-	var ajax = __webpack_require__(3);
-	var PlayButton = __webpack_require__(4);
-	var Spinner = __webpack_require__(5);
+	var classSet = __webpack_require__(4);
+	var ajax = __webpack_require__(5);
+	var PlayButton = __webpack_require__(6);
+	var Spinner = __webpack_require__(7);
 
-	module.exports = React.createClass({
+	var Youtube = __webpack_require__(2);
+	var Vimeo = __webpack_require__(3);
+
+	module.exports = {
+	  Youtube: Youtube,
+	  Vimeo: Vimeo
+	};
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(1);
+	var ajax = __webpack_require__(5);
+	var VideoMixin = __webpack_require__(8);
+
+	module.exports = React.createClass({displayName: 'exports',
+	  mixins: [VideoMixin],
+	  getDefaultProps:function() {
+	    return {from: "youtube"}
+	  },
+	  getIframeUrl:function() {
+	    return ("//youtube.com/embed/" + this.props.id + "?autoplay=1")
+	  },
+	  fetch:function() {
+	    var id = this.props.id;
+	    var url = ("https://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json");
+
+	    ajax.get(url, function(err, res) {
+	      var gallery = res.entry['media$group']['media$thumbnail'];
+	      var thumb = gallery.sort(function(a, b)  {return b.width - a.width;})[0].url;
+
+	      this.setState({
+	        thumb: thumb,
+	        imageLoaded: true
+	      });
+	    }.bind(this));
+	  }
+	});
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(1);
+	var ajax = __webpack_require__(5);
+	var VideoMixin = __webpack_require__(8);
+
+	module.exports = React.createClass({displayName: 'exports',
+	  mixins: [VideoMixin],
+	  getDefaultProps:function() {
+	    return {from: "vimeo"}
+	  },
+	  getIframeUrl:function() {
+	    return ("//player.vimeo.com/video/" + this.props.id + "?autoplay=1")
+	  },
+	  fetch:function() {
+	    var id = this.props.id;
+	    var url = ("http://vimeo.com/api/v2/video/" + id + ".json");
+
+	    ajax.get(url, function(err, res) {
+	      this.setState({
+	        thumb: res[0].thumbnail_large,
+	        imageLoaded: true
+	      });
+	    }.bind(this));
+	  }
+	});
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM *//**
+	 * Produces the same result as React.addons.classSet
+	 * @param  {object} classes
+	 * @return {string}
+	 *
+	 * @author Ciro S. Costa <https://github.com/cirocosta>
+	 */
+
+	module.exports = function(classes)  {
+	  return typeof classes !== 'object' ?
+	    Array.prototype.join.call(arguments, ' ') :
+	    Object.keys(classes).filter(function(className)  {return classes[className];}).join(' ');
+	};
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var get = function(url, cb) {
+	  var req = new XMLHttpRequest();
+
+	  req.open('GET', url, true);
+	  req.onload = function() {
+	    if (req.status === 200 && req.status < 400) {
+	      cb(null, JSON.parse(req.responseText));
+	    }
+	    else {
+	      cb({ error: 'Sorry, an error ocurred on the server' }, null);
+	    }
+	  };
+
+	  req.onerror = function() {
+	    cb({ error: 'Problem with your internet conection' }, null);
+	  };
+
+	  req.send();
+	};
+
+	module.exports = { get: get };
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(1);
+
+	module.exports = React.createClass({displayName: 'exports',
+	  propTypes: {
+	    onClick: React.PropTypes.func
+	  },
+	  render:function() {
+	    return (
+	      React.DOM.button({type: "button", className: "video-play-button", onClick: this.props.onClick}, 
+	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", version: "1.1", viewBox: "0 0 100 100"}, 
+	          React.DOM.path({d: "M79.674,53.719c2.59-2.046,2.59-5.392,0-7.437L22.566,1.053C19.977-0.993,18,0.035,18,3.335v93.331c0,3.3,1.977,4.326,4.566,2.281L79.674,53.719z"})
+	        )
+	      )
+	    );
+	  }
+	});
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(1);
+
+	module.exports = React.createClass({displayName: 'exports',
+	  render:function() {
+	    return (
+	      React.DOM.div({className: "video-loading"}, 
+	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 32 32", width: "32", height: "32"}, 
+	          React.DOM.path({opacity: ".25", d: "M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"}), 
+	          React.DOM.path({d: "M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z"})
+	        )
+	      )
+	    );
+	  }
+	});
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(1);
+	var classSet = __webpack_require__(4);
+	var ajax = __webpack_require__(5);
+	var PlayButton = __webpack_require__(6);
+	var Spinner = __webpack_require__(7);
+
+	module.exports = {
 	  displayName: 'Video',
 	  propTypes: {
-	    from: React.PropTypes.oneOf(['youtube', 'vimeo']),
 	    id: React.PropTypes.string
 	  },
 	  getDefaultProps:function() {
@@ -90,8 +264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  componentDidMount:function() {
 	    this.getSizes();
-	    this.props.from === 'youtube' && this.fetchYoutubeData();
-	    this.props.from === 'vimeo' && this.fetchVimeoData();
+	    this.fetch();
 	  },
 	  render:function() {
 	    var className = (this.props.from + "-video");
@@ -146,14 +319,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.setState({ showingVideo: true });
 	    ev.preventDefault();
 	  },
-	  getIframeUrl:function() {
-	    if (this.props.from === 'youtube') {
-	      return ("//youtube.com/embed/" + this.props.id + "?autoplay=1")
-	    }
-	    else if (this.props.from === 'vimeo') {
-	      return ("//player.vimeo.com/video/" + this.props.id + "?autoplay=1")
-	    }
-	  },
 	  getSizes:function() {
 	    var $el = this.getDOMNode();
 	    var $parent = $el.parentNode;
@@ -166,127 +331,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getProportionalHeight:function(width) {
 	    return width * 0.5625;
-	  },
-	  fetchYoutubeData:function() {
-	    var id = this.props.id;
-	    var url = ("https://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json");
-
-	    ajax.get(url, function(err, res) {
-	      var gallery = res.entry['media$group']['media$thumbnail'];
-	      var thumb = gallery.sort(function(a, b)  {return b.width - a.width;})[0].url;
-
-	      this.setState({
-	        thumb: thumb,
-	        imageLoaded: true
-	      });
-	    }.bind(this));
-	  },
-	  fetchVimeoData:function() {
-	    var id = this.props.id;
-	    var url = ("http://vimeo.com/api/v2/video/" + id + ".json");
-
-	    ajax.get(url, function(err, res) {
-	      this.setState({
-	        thumb: res[0].thumbnail_large,
-	        imageLoaded: true
-	      });
-	    }.bind(this));
 	  }
-	});
-
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM *//**
-	 * Produces the same result as React.addons.classSet
-	 * @param  {object} classes
-	 * @return {string}
-	 *
-	 * @author Ciro S. Costa <https://github.com/cirocosta>
-	 */
-
-	module.exports = function(classes)  {
-	  return typeof classes !== 'object' ?
-	    Array.prototype.join.call(arguments, ' ') :
-	    Object.keys(classes).filter(function(className)  {return classes[className];}).join(' ');
 	};
-
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */var get = function(url, cb) {
-	  var req = new XMLHttpRequest();
-
-	  req.open('GET', url, true);
-	  req.onload = function() {
-	    if (req.status === 200 && req.status < 400) {
-	      cb(null, JSON.parse(req.responseText));
-	    }
-	    else {
-	      cb({ error: 'Sorry, an error ocurred on the server' }, null);
-	    }
-	  };
-
-	  req.onerror = function() {
-	    cb({ error: 'Problem with your internet conection' }, null);
-	  };
-
-	  req.send();
-	};
-
-	module.exports = { get: get };
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */var React = __webpack_require__(1);
-
-	module.exports = React.createClass({displayName: 'exports',
-	  propTypes: {
-	    onClick: React.PropTypes.func
-	  },
-	  render:function() {
-	    return (
-	      React.DOM.button({type: "button", className: "video-play-button", onClick: this.props.onClick}, 
-	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", version: "1.1", viewBox: "0 0 100 100"}, 
-	          React.DOM.path({d: "M79.674,53.719c2.59-2.046,2.59-5.392,0-7.437L22.566,1.053C19.977-0.993,18,0.035,18,3.335v93.331c0,3.3,1.977,4.326,4.566,2.281L79.674,53.719z"})
-	        )
-	      )
-	    );
-	  }
-	});
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */var React = __webpack_require__(1);
-
-	module.exports = React.createClass({displayName: 'exports',
-	  render:function() {
-	    return (
-	      React.DOM.div({className: "video-loading"}, 
-	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 32 32", width: "32", height: "32"}, 
-	          React.DOM.path({opacity: ".25", d: "M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"}), 
-	          React.DOM.path({d: "M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z"})
-	        )
-	      )
-	    );
-	  }
-	});
 
 
 /***/ }
