@@ -25,15 +25,16 @@
     <script src="react-video.js"></script>
     <script type="text/jsx">
       /** @jsx React.DOM */
-      var Video = ReactVideo;
+      var Youtube = ReactVideo.Youtube;
+      var Vimeo = ReactVideo.Vimeo;
 
       React.renderComponent(
-        <Video from='youtube' id='jhg8XRTorYg' />,
+        <Youtube id='jhg8XRTorYg' />,
         document.getElementById('video-youtube')
       );
 
       React.renderComponent(
-        <Video from='vimeo' id='108843586' />,
+        <Vimeo id='108843586' />,
         document.getElementById('video-vimeo')
       );
     </script>
