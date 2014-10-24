@@ -115,7 +115,7 @@ module.exports = React.createClass({
         thumb: thumb,
         imageLoaded: true
       });
-    }.bind(this));
+    });
   },
   fetchVimeoData() {
     var id = this.props.id;
@@ -126,6 +126,6 @@ module.exports = React.createClass({
         thumb: res[0].thumbnail_large,
         imageLoaded: true
       });
-    }.bind(this));
+    });
   }
 });
