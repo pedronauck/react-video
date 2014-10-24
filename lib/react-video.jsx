@@ -7,8 +7,8 @@ var Spinner = require('./components/spinner');
 module.exports = React.createClass({
   displayName: 'Video',
   propTypes: {
-    from: React.PropTypes.oneOf(['youtube', 'vimeo']),
-    id: React.PropTypes.string
+    from: React.PropTypes.oneOf(['youtube', 'vimeo']).isRequired,
+    id: React.PropTypes.string.isRequired
   },
   getDefaultProps() {
     return {
@@ -107,7 +107,7 @@ module.exports = React.createClass({
     var id = this.props.id;
     var url = `https://gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`;
 
-    ajax.get(url, function(err, res) {
+    ajax.get(url, (err, res) => {
       var gallery = res.entry['media$group']['media$thumbnail'];
       var thumb = gallery.sort((a, b) => b.width - a.width)[0].url;
 
@@ -121,7 +121,7 @@ module.exports = React.createClass({
     var id = this.props.id;
     var url = `http://vimeo.com/api/v2/video/${id}.json`;
 
-    ajax.get(url, function(err, res) {
+    ajax.get(url, (err, res) => {
       this.setState({
         thumb: res[0].thumbnail_large,
         imageLoaded: true

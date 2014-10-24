@@ -71,8 +71,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = React.createClass({
 	  displayName: 'Video',
 	  propTypes: {
-	    from: React.PropTypes.oneOf(['youtube', 'vimeo']),
-	    id: React.PropTypes.string
+	    from: React.PropTypes.oneOf(['youtube', 'vimeo']).isRequired,
+	    id: React.PropTypes.string.isRequired
 	  },
 	  getDefaultProps:function() {
 	    return {
@@ -171,7 +171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var id = this.props.id;
 	    var url = ("https://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json");
 
-	    ajax.get(url, function(err, res) {
+	    ajax.get(url, function(err, res)  {
 	      var gallery = res.entry['media$group']['media$thumbnail'];
 	      var thumb = gallery.sort(function(a, b)  {return b.width - a.width;})[0].url;
 
@@ -185,7 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var id = this.props.id;
 	    var url = ("http://vimeo.com/api/v2/video/" + id + ".json");
 
-	    ajax.get(url, function(err, res) {
+	    ajax.get(url, function(err, res)  {
 	      this.setState({
 	        thumb: res[0].thumbnail_large,
 	        imageLoaded: true
