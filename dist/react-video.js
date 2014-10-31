@@ -1,6 +1,6 @@
 /*
  * React Video - React component to load video from Vimeo or Youtube across any device
- * @version v1.0.2
+ * @version v1.0.3
  * @link https://github.com/pedronauck/react-video
  * @license MIT
  * @author Pedro Nauck (https://github.com/pedronauck)
@@ -81,39 +81,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getInitialState:function() {
 	    return {
-	      width: 0,
-	      height: 0,
 	      thumb: null,
 	      imageLoaded: false,
 	      showingVideo: false
 	    };
 	  },
 	  componentDidMount:function() {
-	    this.getSizes();
 	    this.props.from === 'youtube' && this.fetchYoutubeData();
 	    this.props.from === 'vimeo' && this.fetchVimeoData();
 	  },
 	  render:function() {
-	    var className = (this.props.from + "-video");
-	    var style = {
-	      width: this.state.width,
-	      height: this.state.height
-	    };
-
 	    return (
-	      React.DOM.div({className: this.props.className, style: style}, 
-	        React.DOM.div({className: className}, 
-	          !this.state.imageLoaded && Spinner(null), 
-	          this.renderImage(), 
-	          this.renderIframe()
-	        )
+	      React.DOM.div({className: this.props.className}, 
+	        !this.state.imageLoaded && Spinner(null), 
+	        this.renderImage(), 
+	        this.renderIframe()
 	      )
 	    );
 	  },
 	  renderImage:function() {
 	    var style = {
-	      width: this.state.width,
-	      height: this.state.height,
 	      backgroundImage: ("url(" + this.state.thumb + ")")
 	    };
 
@@ -127,7 +114,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  renderIframe:function() {
 	    var embedVideoStyle = {
-	      display: this.state.showingVideo ? 'block' : 'none'
+	      display: this.state.showingVideo ? 'block' : 'none',
+	      width: '100%',
+	      height: '100%'
 	    };
 
 	    if (this.state.showingVideo) {
@@ -153,19 +142,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    else if (this.props.from === 'vimeo') {
 	      return ("//player.vimeo.com/video/" + this.props.id + "?autoplay=1")
 	    }
-	  },
-	  getSizes:function() {
-	    var $el = this.getDOMNode();
-	    var $parent = $el.parentNode;
-	    var parentWidth = $parent.clientWidth || 600;
-
-	    this.setState({
-	      width: parentWidth,
-	      height: this.getProportionalHeight(parentWidth)
-	    });
-	  },
-	  getProportionalHeight:function(width) {
-	    return width * 0.5625;
 	  },
 	  fetchYoutubeData:function() {
 	    var id = this.props.id;

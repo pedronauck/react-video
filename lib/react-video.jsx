@@ -17,39 +17,26 @@ module.exports = React.createClass({
   },
   getInitialState() {
     return {
-      width: 0,
-      height: 0,
       thumb: null,
       imageLoaded: false,
       showingVideo: false
     };
   },
   componentDidMount() {
-    this.getSizes();
     this.props.from === 'youtube' && this.fetchYoutubeData();
     this.props.from === 'vimeo' && this.fetchVimeoData();
   },
   render() {
-    var className = `${this.props.from}-video`;
-    var style = {
-      width: this.state.width,
-      height: this.state.height
-    };
-
     return (
-      <div className={this.props.className} style={style}>
-        <div className={className}>
-          {!this.state.imageLoaded && <Spinner />}
-          {this.renderImage()}
-          {this.renderIframe()}
-        </div>
+      <div className={this.props.className} >
+        {!this.state.imageLoaded && <Spinner />}
+        {this.renderImage()}
+        {this.renderIframe()}
       </div>
     );
   },
   renderImage() {
     var style = {
-      width: this.state.width,
-      height: this.state.height,
       backgroundImage: `url(${this.state.thumb})`
     };
 
@@ -63,7 +50,9 @@ module.exports = React.createClass({
   },
   renderIframe() {
     var embedVideoStyle = {
-      display: this.state.showingVideo ? 'block' : 'none'
+      display: this.state.showingVideo ? 'block' : 'none',
+      width: '100%',
+      height: '100%'
     };
 
     if (this.state.showingVideo) {
@@ -89,19 +78,6 @@ module.exports = React.createClass({
     else if (this.props.from === 'vimeo') {
       return `//player.vimeo.com/video/${this.props.id}?autoplay=1`
     }
-  },
-  getSizes() {
-    var $el = this.getDOMNode();
-    var $parent = $el.parentNode;
-    var parentWidth = $parent.clientWidth || 600;
-
-    this.setState({
-      width: parentWidth,
-      height: this.getProportionalHeight(parentWidth)
-    });
-  },
-  getProportionalHeight(width) {
-    return width * 0.5625;
   },
   fetchYoutubeData() {
     var id = this.props.id;

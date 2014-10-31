@@ -1,19 +1,24 @@
 /*
  * React Video - React component to load video from Vimeo or Youtube across any device
- * @version v1.0.2
+ * @version v1.0.3
  * @link https://github.com/pedronauck/react-video
  * @license MIT
  * @author Pedro Nauck (https://github.com/pedronauck)
 */
 .video {
   position: relative;
+  padding-bottom: 56.25%;
   background: #e2e2e2;
 }
 .video iframe {
   border: 0;
 }
 .video-image {
-  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-position: center center;
   background-size: 100% auto;
 }
@@ -40,7 +45,7 @@
   padding: 0;
   width: 70px;
   border: 0;
-  background: 0;
+  background: none;
 }
 .video-play-button:focus {
   outline: none;
