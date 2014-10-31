@@ -119,7 +119,7 @@ module.exports = React.createClass({
   },
   fetchVimeoData() {
     var id = this.props.id;
-    var url = `http://vimeo.com/api/v2/video/${id}.json`;
+    var url = `https://vimeo.com/api/v2/video/${id}.json`;
 
     ajax.get(url, (err, res) => {
       this.setState({
