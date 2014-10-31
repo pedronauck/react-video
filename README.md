@@ -62,18 +62,16 @@ So, the semantic HTML structure will be something like this:
 
 ```html
   <div class='video'>
-    <div class='{from}-video'>
-      <div class='video-loading'>
+    <div class='video-loading'>
+      <svg>...</svg>
+    </div>
+    <div class='video-image'>
+      <button type='button' class='video-play-button'>
         <svg>...</svg>
-      </div>
-      <div class='video-image'>
-        <button type='button' class='video-play-button'>
-          <svg>...</svg>
-        </button>
-      </div>
-      <div class='video-embed'>
-        <iframe>...</iframe>
-      </div>
+      </button>
+    </div>
+    <div class='video-embed'>
+      <iframe>...</iframe>
     </div>
   </div>
 ```
