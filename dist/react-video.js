@@ -1,6 +1,6 @@
 /*
  * React Video - React component to load video from Vimeo or Youtube across any device
- * @version v1.1.3
+ * @version v1.1.4
  * @link https://github.com/pedronauck/react-video
  * @license MIT
  * @author Pedro Nauck (https://github.com/pedronauck)
@@ -159,7 +159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  fetchVimeoData:function() {
 	    var id = this.props.id;
-	    var url = ("http://vimeo.com/api/v2/video/" + id + ".json");
+	    var url = ("https://vimeo.com/api/v2/video/" + id + ".json");
 
 	    ajax.get(url, function(err, res)  {
 	      this.setState({
