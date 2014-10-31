@@ -29,11 +29,17 @@ code:not(.hljs) {
 }
 
 .header {
-  width: 960px;
+  width: 100%;
   margin: 0 auto;
   color: white;
   text-align: center;
 }
+
+@media screen and (min-width: 960px) {
+  .header {
+    width: 53.33em;
+  }
+};
 
 .header .title {
   font-family: 'Montserrat';
@@ -46,7 +52,13 @@ code:not(.hljs) {
   font-size: 30px;
   font-weight: 300;
   color: #999;
-  padding: 0 150px 70px;
+  padding: 0 50px 70px;
+}
+
+@media screen and (min-width: 960px) {
+  .header .subtitle {
+    padding: 0 150px 70px;
+  }
 }
 
 .github-buttons {
@@ -56,9 +68,15 @@ code:not(.hljs) {
   list-style: none;
 }
 
-.github-buttons li {
-  float: left;
-  margin: 0 10px;
+.github-buttons li ~ li {
+  margin-top: 10px;
+}
+
+@media screen and (min-width: 420px) {
+  .github-buttons li {
+    float: left;
+    margin: 0 10px;
+  }
 }
 
 .github-buttons li a {
@@ -105,10 +123,21 @@ code:not(.hljs) {
  * ---------------------------------------------------------------------------*/
 
 .content-section {
-  width: 800px;
+  width: 100%;
   margin: 0 auto;
-  padding: 80px 0;
+  padding: 40px 0;
 }
+
+.content-section ~ .content-section {
+  padding-top: 0;
+}
+
+@media screen and (min-width: 960px) {
+  .content-section {
+    width: 44.44em;
+    padding: 80px 0;
+  }
+};
 
 .content-section ~ .content-section {
   padding-top: 0;
@@ -125,7 +154,13 @@ code:not(.hljs) {
 .content-section p {
   text-align: center;
   margin-bottom: 30px;
-  padding: 0 80px;
+  padding: 0 30px;
+}
+
+@media screen and (min-width: 960px) {
+  .content-section p {
+    padding: 0 80px;
+  }
 }
 
 .content-section pre {
