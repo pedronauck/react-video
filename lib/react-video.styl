@@ -4,6 +4,14 @@
 //
 // ----------------------------------------------------------------------------
 
+$full-width {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .video {
   position: relative;
   padding-bottom: 56.25%;
@@ -19,23 +27,15 @@
 // ----------------------------------------------------------------------------
 
 .video-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @extends $full-width;
   background-position: center center;
   background-size: 100% auto;
 
   &:after {
+    @extends $full-width;
     z-index: 1;
-    position: absolute;
     display: block;
     content: '';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: rgba(black, .3);
   }
 }
@@ -95,5 +95,18 @@ $to-center {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+// ----------------------------------------------------------------------------
+//  Video Embed
+// ----------------------------------------------------------------------------
+
+.video-embed {
+  @extends $full-width;
+
+  iframe {
+    width: 100%;
+    height: 100%;
   }
 }

@@ -1,6 +1,6 @@
 /*
  * React Video - React component to load video from Vimeo or Youtube across any device
- * @version v1.1.4
+ * @version v1.1.5
  * @link https://github.com/pedronauck/react-video
  * @license MIT
  * @author Pedro Nauck (https://github.com/pedronauck)
@@ -122,11 +122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.state.showingVideo) {
 	      return (
 	        React.DOM.div({className: "video-embed", style: embedVideoStyle}, 
-	          React.DOM.iframe({
-	            frameborder: "0", 
-	            src: this.getIframeUrl(), 
-	            width: this.state.width, 
-	            height: this.state.height})
+	          React.DOM.iframe({frameborder: "0", src: this.getIframeUrl()})
 	        )
 	      );
 	    }
