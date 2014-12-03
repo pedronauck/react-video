@@ -7,7 +7,7 @@ var Spinner = require('./components/spinner');
 module.exports = React.createClass({
   displayName: 'Video',
   propTypes: {
-    from: React.PropTypes.oneOf(['youtube', 'vimeo']).isRequired,
+    from: React.PropTypes.oneOf(['youtube', 'vimeo']),
     id: React.PropTypes.string.isRequired
   },
   getDefaultProps() {
@@ -22,9 +22,15 @@ module.exports = React.createClass({
       showingVideo: false
     };
   },
+  isYoutube() {
+    return this.props.from === 'youtube' || isNaN(this.id);
+  }
+  isVimeo() {
+    return this.props.from === 'vimeo' || !isNaN(this.id);
+  }
   componentDidMount() {
-    this.props.from === 'youtube' && this.fetchYoutubeData();
-    this.props.from === 'vimeo' && this.fetchVimeoData();
+    this.isYoutube() && this.fetchYoutubeData();
+    this.isViemo() && this.fetchVimeoData();
   },
   render() {
     return (
@@ -68,10 +74,10 @@ module.exports = React.createClass({
     ev.preventDefault();
   },
   getIframeUrl() {
-    if (this.props.from === 'youtube') {
+    if (this.isYoutube()) {
       return `//youtube.com/embed/${this.props.id}?autoplay=1`
     }
-    else if (this.props.from === 'vimeo') {
+    else if (this.isVimeo()) {
       return `//player.vimeo.com/video/${this.props.id}?autoplay=1`
     }
   },
