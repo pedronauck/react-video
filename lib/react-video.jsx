@@ -23,10 +23,10 @@ module.exports = React.createClass({
     };
   },
   isYoutube() {
-    return this.props.from === 'youtube' || isNaN(this.id);
+    return this.props.from === 'youtube' || isNaN(this.props.id);
   }
   isVimeo() {
-    return this.props.from === 'vimeo' || !isNaN(this.id);
+    return this.props.from === 'vimeo' || !isNaN(this.props.id);
   }
   componentDidMount() {
     this.isYoutube() && this.fetchYoutubeData();
