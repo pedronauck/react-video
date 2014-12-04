@@ -8,7 +8,7 @@ module.exports = React.createClass({
   displayName: 'Video',
   propTypes: {
     from: React.PropTypes.oneOf(['youtube', 'vimeo']).isRequired,
-    id: React.PropTypes.string.isRequired
+    videoId: React.PropTypes.string.isRequired
   },
   getDefaultProps() {
     return {
@@ -69,14 +69,14 @@ module.exports = React.createClass({
   },
   getIframeUrl() {
     if (this.props.from === 'youtube') {
-      return `//youtube.com/embed/${this.props.id}?autoplay=1`
+      return `//youtube.com/embed/${this.props.videoId}?autoplay=1`
     }
     else if (this.props.from === 'vimeo') {
-      return `//player.vimeo.com/video/${this.props.id}?autoplay=1`
+      return `//player.vimeo.com/video/${this.props.videoId}?autoplay=1`
     }
   },
   fetchYoutubeData() {
-    var id = this.props.id;
+    var id = this.props.videoId;
     var url = `https://gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`;
 
     ajax.get(url, (err, res) => {
@@ -90,7 +90,7 @@ module.exports = React.createClass({
     });
   },
   fetchVimeoData() {
-    var id = this.props.id;
+    var id = this.props.videoId;
     var url = `https://vimeo.com/api/v2/video/${id}.json`;
 
     ajax.get(url, (err, res) => {
