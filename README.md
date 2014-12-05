@@ -35,13 +35,13 @@ Using the component is simpler than installing. See an example with [browserify]
 
   // Video from Youtube
   React.renderComponent(
-    <Video from='youtube' id={videoId} />,
+    <Video from='youtube' videoId={videoId} />,
     $mountNode
   );
 
   // Video from Vimeo
   React.renderComponent(
-    <Video from='vimeo' id={videoId} />,
+    <Video from='vimeo' videoId={videoId} />,
     $mountNode
   );
 ```
@@ -87,7 +87,7 @@ For more details, check out the API below.
 Property | Type | Default | Required | Description
 -------- | ---- | ------- | -------- |-----------
 from | `String` | none | yes | Video source: `youtube` or `vimeo`
-id | `String` | none | yes | The video ID
+videoId | `String` | none | yes | The video ID
 
 ## Contributing
 
