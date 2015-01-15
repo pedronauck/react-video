@@ -1,9 +1,18 @@
 var get = function(url, cb) {
-  var req = new XMLHttpRequest();
+  var req = false;
 
-  req.open('GET', url, true);
-  req.onload = function() {
-    if (req.status === 200 && req.status < 400) {
+  // XDomainRequest onload
+  var oldIE = function () {
+    cb(null, JSON.parse(req.responseText));
+  };
+
+  // XMLHttpRequest onload
+  var onLoad = function () {
+    if (req.readyState !== 4) {
+      return;
+    }
+
+    if (req.status === 200) {
       cb(null, JSON.parse(req.responseText));
     }
     else {
@@ -11,11 +20,30 @@ var get = function(url, cb) {
     }
   };
 
-  req.onerror = function() {
+  var onError = function() {
     cb({ error: 'Problem with your internet conection' }, null);
   };
 
+  try {
+    // XDomainRequest allows cross-domain requests on old
+    // versions of IE (>=IE9)
+    req = new XDomainRequest();
+
+    req.onload = oldIE;
+  }
+  catch (e) {
+    req = new XMLHttpRequest();
+
+    req.onreadystatechange = onLoad;
+  }
+
+  req.onerror = onError;
+
+  req.open('GET', url, true);
+
   req.send();
 };
+
+
 
 module.exports = { get: get };
