@@ -77,7 +77,7 @@ module.exports = React.createClass({
   },
   fetchYoutubeData() {
     var id = this.props.videoId;
-    var url = `https://gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`;
+    var url = `//gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`;
 
     ajax.get(url, (err, res) => {
       var gallery = res.entry['media$group']['media$thumbnail'];
@@ -91,7 +91,7 @@ module.exports = React.createClass({
   },
   fetchVimeoData() {
     var id = this.props.videoId;
-    var url = `https://vimeo.com/api/v2/video/${id}.json`;
+    var url = `//vimeo.com/api/v2/video/${id}.json`;
 
     ajax.get(url, (err, res) => {
       this.setState({
