@@ -34,15 +34,24 @@ Using the component is simpler than installing. See an example with [browserify]
   var Video = require('react-video');
 
   // Video from Youtube
-  React.renderComponent(
+  React.render(
     <Video from='youtube' videoId={videoId} />,
     $mountNode
   );
 
   // Video from Vimeo
-  React.renderComponent(
+  React.render(
     <Video from='vimeo' videoId={videoId} />,
     $mountNode
+  );
+```
+
+The property `videoId` is optional, so you can use it or not. If you don't pass the property, the component will select your type of video based on your id.
+
+```javascript
+  React.render(
+    &lt;Video videoId={videoId} /&gt;,
+    document.querySelector('#your-div')
   );
 ```
 

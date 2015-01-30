@@ -80,12 +80,12 @@
       /** @jsx React.DOM */
       var Video = require('react-video');
 
-      React.renderComponent(
+      React.render(
         &lt;Video from='youtube' videoId={videoId} /&gt;,
         document.querySelector('#your-div')
       );
 
-      React.renderComponent(
+      React.render(
         &lt;Video from='vimeo' videoId={videoId} /&gt;,
         document.querySelector('#your-div')
       );
@@ -94,7 +94,7 @@
       The property <code>videoId</code> is optional, so you can use it or not. If you don't pass the property, the component will select your type of video based on your id.
     </p>
     <pre><code class="hljs javascript">
-      React.renderComponent(
+      React.render(
         &lt;Video videoId={videoId} /&gt;,
         document.querySelector('#your-div')
       );
