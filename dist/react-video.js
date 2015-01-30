@@ -72,7 +72,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  displayName: 'Video',
 	  propTypes: {
 	    from: React.PropTypes.oneOf(['youtube', 'vimeo']).isRequired,
-	    id: React.PropTypes.string.isRequired
+	    videoId: React.PropTypes.string.isRequired
 	  },
 	  getDefaultProps:function() {
 	    return {
@@ -133,15 +133,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getIframeUrl:function() {
 	    if (this.props.from === 'youtube') {
-	      return ("//youtube.com/embed/" + this.props.id + "?autoplay=1")
+	      return ("//youtube.com/embed/" + this.props.videoId + "?autoplay=1")
 	    }
 	    else if (this.props.from === 'vimeo') {
-	      return ("//player.vimeo.com/video/" + this.props.id + "?autoplay=1")
+	      return ("//player.vimeo.com/video/" + this.props.videoId + "?autoplay=1")
 	    }
 	  },
 	  fetchYoutubeData:function() {
-	    var id = this.props.id;
-	    var url = ("https://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json");
+	    var id = this.props.videoId;
+	    var url = ("//gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json");
 
 	    ajax.get(url, function(err, res)  {
 	      var gallery = res.entry['media$group']['media$thumbnail'];
@@ -154,8 +154,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }.bind(this));
 	  },
 	  fetchVimeoData:function() {
-	    var id = this.props.id;
-	    var url = ("https://vimeo.com/api/v2/video/" + id + ".json");
+	    var id = this.props.videoId;
+	    var url = ("//vimeo.com/api/v2/video/" + id + ".json");
 
 	    ajax.get(url, function(err, res)  {
 	      this.setState({
@@ -197,22 +197,37 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */var get = function(url, cb) {
-	  var req = new XMLHttpRequest();
+	  var req = false;
 
-	  req.open('GET', url, true);
-	  req.onload = function() {
-	    if (req.status === 200 && req.status < 400) {
-	      cb(null, JSON.parse(req.responseText));
-	    }
+	  // XDomainRequest onload
+	  var oldIE = function () {
+	    cb(null, JSON.parse(req.responseText));
+	  };
+
+	  // XMLHttpRequest onload
+	  var onLoad = function () {
+	    if (req.readyState !== 4) return;
+	    if (req.status === 200) cb(null, JSON.parse(req.responseText));
 	    else {
 	      cb({ error: 'Sorry, an error ocurred on the server' }, null);
 	    }
 	  };
 
-	  req.onerror = function() {
+	  var onError = function() {
 	    cb({ error: 'Problem with your internet conection' }, null);
 	  };
 
+	  try {
+	    req = new XDomainRequest();
+	    req.onload = oldIE;
+	  }
+	  catch (e) {
+	    req = new XMLHttpRequest();
+	    req.onreadystatechange = onLoad;
+	  }
+
+	  req.onerror = onError;
+	  req.open('GET', url, true);
 	  req.send();
 	};
 

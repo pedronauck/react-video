@@ -56,6 +56,8 @@ gulp.task('css', function () {
 
 gulp.task('server', function() {
   browserSync({
+    open: false,
+    notify: false,
     server: {
       baseDir: ['example', 'dist']
     }

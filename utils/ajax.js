@@ -8,13 +8,8 @@ var get = function(url, cb) {
 
   // XMLHttpRequest onload
   var onLoad = function () {
-    if (req.readyState !== 4) {
-      return;
-    }
-
-    if (req.status === 200) {
-      cb(null, JSON.parse(req.responseText));
-    }
+    if (req.readyState !== 4) return;
+    if (req.status === 200) cb(null, JSON.parse(req.responseText));
     else {
       cb({ error: 'Sorry, an error ocurred on the server' }, null);
     }
@@ -25,25 +20,17 @@ var get = function(url, cb) {
   };
 
   try {
-    // XDomainRequest allows cross-domain requests on old
-    // versions of IE (>=IE9)
     req = new XDomainRequest();
-
     req.onload = oldIE;
   }
   catch (e) {
     req = new XMLHttpRequest();
-
     req.onreadystatechange = onLoad;
   }
 
   req.onerror = onError;
-
   req.open('GET', url, true);
-
   req.send();
 };
-
-
 
 module.exports = { get: get };
