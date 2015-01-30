@@ -50,7 +50,7 @@ The property `videoId` is optional, so you can use it or not. If you don't pass 
 
 ```javascript
   React.render(
-    &lt;Video videoId={videoId} /&gt;,
+    <Video videoId={videoId} />
     document.querySelector('#your-div')
   );
 ```
