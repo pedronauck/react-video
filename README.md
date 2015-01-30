@@ -87,7 +87,7 @@ For more details, check out the API below.
 Property | Type | Default | Required | Description
 -------- | ---- | ------- | -------- |-----------
 from | `String` | none | no | Video source: `youtube` or `vimeo`. Leave empty and the service will be detected for you by looking a the id.
-videoId | `String` | none | yes | The video ID
+videoId | `String` | none | no | The video ID
 
 ## Contributing
 
