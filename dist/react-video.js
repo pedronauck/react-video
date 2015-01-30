@@ -1,6 +1,6 @@
 /*
  * React Video - React component to load video from Vimeo or Youtube across any device
- * @version v1.2.0
+ * @version v1.3.0
  * @link https://github.com/pedronauck/react-video
  * @license MIT
  * @author Pedro Nauck (https://github.com/pedronauck)
@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = React.createClass({
 	  displayName: 'Video',
 	  propTypes: {
-	    from: React.PropTypes.oneOf(['youtube', 'vimeo']).isRequired,
+	    from: React.PropTypes.oneOf(['youtube', 'vimeo']),
 	    videoId: React.PropTypes.string.isRequired
 	  },
 	  getDefaultProps:function() {
@@ -86,9 +86,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      showingVideo: false
 	    };
 	  },
+	  isYoutube:function() {
+	    return this.props.from === 'youtube' || isNaN(this.props.id);
+	  },
+	  isVimeo:function() {
+	    return this.props.from === 'vimeo' || !isNaN(this.props.id);
+	  },
 	  componentDidMount:function() {
-	    this.props.from === 'youtube' && this.fetchYoutubeData();
-	    this.props.from === 'vimeo' && this.fetchVimeoData();
+	    this.isYoutube() && this.fetchYoutubeData();
+	    this.isVimeo() && this.fetchVimeoData();
 	  },
 	  render:function() {
 	    return (
@@ -132,10 +138,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ev.preventDefault();
 	  },
 	  getIframeUrl:function() {
-	    if (this.props.from === 'youtube') {
+	    if (this.isYoutube()) {
 	      return ("//youtube.com/embed/" + this.props.videoId + "?autoplay=1")
 	    }
-	    else if (this.props.from === 'vimeo') {
+	    else if (this.isVimeo()) {
 	      return ("//player.vimeo.com/video/" + this.props.videoId + "?autoplay=1")
 	    }
 	  },
