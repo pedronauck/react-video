@@ -20,7 +20,7 @@ Installing this component is very easy and it has just one dependency: [React](h
   $ bower install --save react-video
 ```
 
-- Or if you want to [download the lastest release](https://github.com/pedronauck/react-video/archive/v1.4.0.zip) and put in your website, it will work too!
+- Or if you want to [download the lastest release](https://github.com/pedronauck/react-video/archive/v1.5.0.zip) and put in your website, it will work too!
 
 **NOTICE:** You need just one thing to make the component work. Put the [base component style](./dist/react-video.css) at the `<header>` tag. If you don't wanna use the `.css` extension, you can get the `.styl` or `.scss` extension at the folder `./lib`.
 
@@ -51,6 +51,19 @@ The property `videoId` is optional, so you can use it or not. If you don't pass 
 ```javascript
   React.render(
     <Video videoId={videoId} />
+    document.querySelector('#your-div')
+  );
+```
+
+To handle errors when something happens, like your video can't be loaded, you can pass a callback with a prop `onError` in the component:
+
+```javascript
+  var _onError = function(err) {
+    console.log(err);
+  };
+
+  React.render(
+    <Video onError={_onError} videoId={videoId} />
     document.querySelector('#your-div')
   );
 ```
@@ -97,6 +110,7 @@ Property | Type | Default | Required | Description
 -------- | ---- | ------- | -------- |-----------
 from | `String` | none | no | Video source: `youtube` or `vimeo`. Leave empty and the service will be detected for you by looking a the id.
 videoId | `String` | none | no | The video ID
+onError | `Function` | yes | no | Callback function if the video can't be loaded
 
 ## Contributing
 

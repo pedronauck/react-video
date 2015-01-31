@@ -1,6 +1,6 @@
 /*
  * React Video - React component to load video from Vimeo or Youtube across any device
- * @version v1.4.0
+ * @version v1.5.0
  * @link https://github.com/pedronauck/react-video
  * @license MIT
  * @author Pedro Nauck (https://github.com/pedronauck)
@@ -72,7 +72,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  displayName: 'Video',
 	  propTypes: {
 	    from: React.PropTypes.oneOf(['youtube', 'vimeo']),
-	    videoId: React.PropTypes.string.isRequired
+	    videoId: React.PropTypes.string.isRequired,
+	    onError: React.PropTypes.func
 	  },
 	  getDefaultProps:function() {
 	    return {
@@ -147,28 +148,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  fetchYoutubeData:function() {
 	    var id = this.props.videoId;
-	    var url = ("//gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json");
 
-	    ajax.get(url, function(err, res)  {
-	      var gallery = res.entry['media$group']['media$thumbnail'];
-	      var thumb = gallery.sort(function(a, b)  {return b.width - a.width;})[0].url;
+	    ajax.get({
+	      url: ("//gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json"),
+	      onSuccess:function(err, res) {
+	        var gallery = res.entry['media$group']['media$thumbnail'];
+	        var thumb = gallery.sort(function(a, b)  {return b.width - a.width;})[0].url;
 
-	      this.setState({
-	        thumb: thumb,
-	        imageLoaded: true
-	      });
-	    }.bind(this));
+	        this.setState({
+	          thumb: thumb,
+	          imageLoaded: true
+	        })
+	      },
+	      onError: this.props.onError
+	    });
 	  },
 	  fetchVimeoData:function() {
 	    var id = this.props.videoId;
-	    var url = ("//vimeo.com/api/v2/video/" + id + ".json");
 
-	    ajax.get(url, function(err, res)  {
-	      this.setState({
-	        thumb: res[0].thumbnail_large,
-	        imageLoaded: true
-	      });
-	    }.bind(this));
+	    ajax.get({
+	      url: ("//vimeo.com/api/v2/video/" + id + ".json"),
+	      onSuccess:function(err, res) {
+	        this.setState({
+	          thumb: res[0].thumbnail_large,
+	          imageLoaded: true
+	        });
+	      },
+	      onError: this.props.onError
+	    });
 	  }
 	});
 
@@ -202,42 +209,49 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */var get = function(url, cb) {
+	/** @jsx React.DOM */exports.get = function(opts) {
+	  var url = opts.url;
+	  var successCb = opts.onSuccess;
+	  var errorCb = opts.onError;
 	  var req = false;
 
 	  // XDomainRequest onload
-	  var oldIE = function () {
-	    cb(null, JSON.parse(req.responseText));
+	  var _oldIE = function () {
+	    successCb(null, JSON.parse(req.responseText));
 	  };
 
 	  // XMLHttpRequest onload
-	  var onLoad = function () {
+	  var _onLoad = function () {
 	    if (req.readyState !== 4) return;
-	    if (req.status === 200) cb(null, JSON.parse(req.responseText));
+	    if (req.status === 200) successCb(null, JSON.parse(req.responseText));
 	    else {
-	      cb({ error: 'Sorry, an error ocurred on the server' }, null);
+	      var err = { error: 'Sorry, an error ocurred on the server' };
+
+	      if (errorCb && typeof errorCb === 'function') return errorCb(err);
+	      successCb(err, null);
 	    }
 	  };
 
-	  var onError = function() {
-	    cb({ error: 'Problem with your internet conection' }, null);
+	  var _onError = function() {
+	    var err = { error: 'Sorry, an error ocurred on the server' };
+
+	    if (errorCb && typeof errorCb === 'function') return errorCb(err);
+	    successCb(err, null);
 	  };
 
 	  try {
 	    req = new XDomainRequest();
-	    req.onload = oldIE;
+	    req.onload = _oldIE;
 	  }
 	  catch (e) {
 	    req = new XMLHttpRequest();
-	    req.onreadystatechange = onLoad;
+	    req.onreadystatechange = _onLoad;
 	  }
 
-	  req.onerror = onError;
+	  req.onerror = _onError;
 	  req.open('GET', url, true);
 	  req.send();
 	};
-
-	module.exports = { get: get };
 
 
 /***/ },

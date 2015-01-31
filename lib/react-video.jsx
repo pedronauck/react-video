@@ -8,7 +8,8 @@ module.exports = React.createClass({
   displayName: 'Video',
   propTypes: {
     from: React.PropTypes.oneOf(['youtube', 'vimeo']),
-    videoId: React.PropTypes.string.isRequired
+    videoId: React.PropTypes.string.isRequired,
+    onError: React.PropTypes.func
   },
   getDefaultProps() {
     return {
@@ -83,27 +84,33 @@ module.exports = React.createClass({
   },
   fetchYoutubeData() {
     var id = this.props.videoId;
-    var url = `//gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`;
 
-    ajax.get(url, (err, res) => {
-      var gallery = res.entry['media$group']['media$thumbnail'];
-      var thumb = gallery.sort((a, b) => b.width - a.width)[0].url;
+    ajax.get({
+      url: `//gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`,
+      onSuccess(err, res) {
+        var gallery = res.entry['media$group']['media$thumbnail'];
+        var thumb = gallery.sort((a, b) => b.width - a.width)[0].url;
 
-      this.setState({
-        thumb: thumb,
-        imageLoaded: true
-      });
+        this.setState({
+          thumb: thumb,
+          imageLoaded: true
+        })
+      },
+      onError: this.props.onError
     });
   },
   fetchVimeoData() {
     var id = this.props.videoId;
-    var url = `//vimeo.com/api/v2/video/${id}.json`;
 
-    ajax.get(url, (err, res) => {
-      this.setState({
-        thumb: res[0].thumbnail_large,
-        imageLoaded: true
-      });
+    ajax.get({
+      url: `//vimeo.com/api/v2/video/${id}.json`,
+      onSuccess(err, res) {
+        this.setState({
+          thumb: res[0].thumbnail_large,
+          imageLoaded: true
+        });
+      },
+      onError: this.props.onError
     });
   }
 });

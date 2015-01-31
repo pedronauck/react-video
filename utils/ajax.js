@@ -1,36 +1,43 @@
-var get = function(url, cb) {
+exports.get = function(opts) {
+  var url = opts.url;
+  var successCb = opts.onSuccess;
+  var errorCb = opts.onError;
   var req = false;
 
   // XDomainRequest onload
-  var oldIE = function () {
-    cb(null, JSON.parse(req.responseText));
+  var _oldIE = function () {
+    successCb(null, JSON.parse(req.responseText));
   };
 
   // XMLHttpRequest onload
-  var onLoad = function () {
+  var _onLoad = function () {
     if (req.readyState !== 4) return;
-    if (req.status === 200) cb(null, JSON.parse(req.responseText));
+    if (req.status === 200) successCb(null, JSON.parse(req.responseText));
     else {
-      cb({ error: 'Sorry, an error ocurred on the server' }, null);
+      var err = { error: 'Sorry, an error ocurred on the server' };
+
+      if (errorCb && typeof errorCb === 'function') return errorCb(err);
+      successCb(err, null);
     }
   };
 
-  var onError = function() {
-    cb({ error: 'Problem with your internet conection' }, null);
+  var _onError = function() {
+    var err = { error: 'Sorry, an error ocurred on the server' };
+
+    if (errorCb && typeof errorCb === 'function') return errorCb(err);
+    successCb(err, null);
   };
 
   try {
     req = new XDomainRequest();
-    req.onload = oldIE;
+    req.onload = _oldIE;
   }
   catch (e) {
     req = new XMLHttpRequest();
-    req.onreadystatechange = onLoad;
+    req.onreadystatechange = _onLoad;
   }
 
-  req.onerror = onError;
+  req.onerror = _onError;
   req.open('GET', url, true);
   req.send();
 };
-
-module.exports = { get: get };
