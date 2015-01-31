@@ -100,6 +100,20 @@
       );
     </code></pre>
     <p>
+      To handle errors when something happens, like your video can't be loaded, you can pass a callback with a prop <code>onError</code> in the component:
+
+      <pre><code class="hljs javascript">
+        var _onError = function(err) {
+          console.log(err);
+        };
+
+        React.render(
+          &lt;Video onError={_onError} videoId={videoId} /&gt;
+          document.querySelector('#your-div')
+        );
+      </code></pre>
+    </p>
+    <p>
       If you decide to use just Javascript without any module loader, you can get the global variable <code>window.ReactVideo</code>:
     </p>
     <pre><code class="hljs javascript">
