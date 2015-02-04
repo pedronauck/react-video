@@ -84,6 +84,7 @@ module.exports = React.createClass({
   },
   fetchYoutubeData() {
     var id = this.props.videoId;
+    var that = this;
 
     ajax.get({
       url: `//gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`,
@@ -91,26 +92,27 @@ module.exports = React.createClass({
         var gallery = res.entry['media$group']['media$thumbnail'];
         var thumb = gallery.sort((a, b) => b.width - a.width)[0].url;
 
-        this.setState({
+        that.setState({
           thumb: thumb,
           imageLoaded: true
         })
       },
-      onError: this.props.onError
+      onError: that.props.onError
     });
   },
   fetchVimeoData() {
     var id = this.props.videoId;
+    var that = this;
 
     ajax.get({
       url: `//vimeo.com/api/v2/video/${id}.json`,
       onSuccess(err, res) {
-        this.setState({
+        that.setState({
           thumb: res[0].thumbnail_large,
           imageLoaded: true
         });
       },
-      onError: this.props.onError
+      onError: that.props.onError
     });
   }
 });
