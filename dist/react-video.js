@@ -129,7 +129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.state.showingVideo) {
 	      return (
 	        React.createElement("div", {className: "video-embed", style: embedVideoStyle}, 
-	          React.createElement("iframe", {frameborder: "0", src: this.getIframeUrl()})
+	          React.createElement("iframe", {frameBorder: "0", src: this.getIframeUrl()})
 	        )
 	      );
 	    }

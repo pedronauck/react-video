@@ -65,7 +65,7 @@ module.exports = React.createClass({
     if (this.state.showingVideo) {
       return (
         <div className='video-embed' style={embedVideoStyle}>
-          <iframe frameborder='0' src={this.getIframeUrl()}></iframe>
+          <iframe frameBorder='0' src={this.getIframeUrl()}></iframe>
         </div>
       );
     }
