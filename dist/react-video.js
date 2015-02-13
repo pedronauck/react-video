@@ -93,9 +93,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isVimeo:function() {
 	    return this.props.from === 'vimeo' || !isNaN(this.props.videoId);
 	  },
+	  componentWillReceiveProps:function(nextProps) {
+	    if (nextProps.className !== this.props.className || nextProps.from !== this.props.from || nextProps.videoId !== this.props.videoId) {
+	      this.setState({
+	        thumb: null,
+	        imageLoaded: false,
+	        showingVideo: false
+	      });
+	    }
+	  },
 	  componentDidMount:function() {
-	    this.isYoutube() && this.fetchYoutubeData();
-	    this.isVimeo() && this.fetchVimeoData();
+	    if (!this.state.imageLoaded) {
+	      this.isYoutube() && this.fetchYoutubeData();
+	      this.isVimeo() && this.fetchVimeoData();
+	    }
+	  },
+	  componentDidUpdate:function() {
+	    if (!this.state.imageLoaded) {
+	      this.isYoutube() && this.fetchYoutubeData();
+	      this.isVimeo() && this.fetchVimeoData();
+	    }
 	  },
 	  render:function() {
 	    return (

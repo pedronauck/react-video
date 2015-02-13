@@ -29,9 +29,26 @@ module.exports = React.createClass({
   isVimeo() {
     return this.props.from === 'vimeo' || !isNaN(this.props.videoId);
   },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.className !== this.props.className || nextProps.from !== this.props.from || nextProps.videoId !== this.props.videoId) {
+      this.setState({
+        thumb: null,
+        imageLoaded: false,
+        showingVideo: false
+      });
+    }
+  },
   componentDidMount() {
-    this.isYoutube() && this.fetchYoutubeData();
-    this.isVimeo() && this.fetchVimeoData();
+    if (!this.state.imageLoaded) {
+      this.isYoutube() && this.fetchYoutubeData();
+      this.isVimeo() && this.fetchVimeoData();
+    }
+  },
+  componentDidUpdate() {
+    if (!this.state.imageLoaded) {
+      this.isYoutube() && this.fetchYoutubeData();
+      this.isVimeo() && this.fetchVimeoData();
+    }
   },
   render() {
     return (
