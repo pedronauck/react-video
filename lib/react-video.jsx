@@ -93,7 +93,7 @@ module.exports = React.createClass({
   },
   getIframeUrl() {
     if (this.isYoutube()) {
-      return `//youtube.com/embed/${this.props.videoId}?autoplay=1`
+      return `//youtube.com/embed/${this.props.videoId}?autoplay=1&modestbranding=1&rel=0&showinfo=0`
     }
     else if (this.isVimeo()) {
       return `//player.vimeo.com/video/${this.props.videoId}?autoplay=1`
