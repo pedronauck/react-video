@@ -7,7 +7,7 @@ var Spinner = require('./components/spinner');
 module.exports = React.createClass({
   displayName: 'Video',
   propTypes: {
-    from: React.PropTypes.oneOf(['youtube', 'vimeo']),
+    from: React.PropTypes.oneOf(['youtube']),
     videoId: React.PropTypes.string.isRequired,
     onError: React.PropTypes.func
   },
@@ -26,12 +26,47 @@ module.exports = React.createClass({
   isYoutube() {
     return this.props.from === 'youtube' || isNaN(this.props.videoId);
   },
-  isVimeo() {
-    return this.props.from === 'vimeo' || !isNaN(this.props.videoId);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.className !== this.props.className || nextProps.from !== this.props.from || nextProps.videoId !== this.props.videoId) {
+      this.setState({
+        thumb: null,
+        imageLoaded: false,
+        showingVideo: false
+      });
+    }
   },
   componentDidMount() {
-    this.isYoutube() && this.fetchYoutubeData();
-    this.isVimeo() && this.fetchVimeoData();
+    if (!this.state.imageLoaded) {
+      this.isYoutube() && this.fetchYoutubeData();
+    }
+  },
+  componentDidUpdate() {
+    if (!this.state.imageLoaded) {
+      this.isYoutube() && this.fetchYoutubeData();
+    }
+
+    var player = new YT.Player('player_' + this.props.videoId, {
+      height: '390',
+      width: '640',
+      videoId: this.props.videoId,
+      playerVars: {
+        autoplay: 1,
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      },
+      events: {
+        'onStateChange': this.onPlayerStateChange
+      }
+    });
+
+  },
+  onPlayerStateChange: function (event) {
+    if (event.data == YT.PlayerState.ENDED) {
+      this.setState({
+        showingVideo: false
+      });
+    }
   },
   render() {
     return (
@@ -65,7 +100,7 @@ module.exports = React.createClass({
     if (this.state.showingVideo) {
       return (
         <div className='video-embed' style={embedVideoStyle}>
-          <iframe frameborder='0' src={this.getIframeUrl()}></iframe>
+          <div id={'player_' + this.props.videoId}></div>
         </div>
       );
     }
@@ -75,15 +110,11 @@ module.exports = React.createClass({
     ev.preventDefault();
   },
   getIframeUrl() {
-    if (this.isYoutube()) {
-      return `//youtube.com/embed/${this.props.videoId}?autoplay=1`
-    }
-    else if (this.isVimeo()) {
-      return `//player.vimeo.com/video/${this.props.videoId}?autoplay=1`
-    }
+    return `//youtube.com/embed/${this.props.videoId}?autoplay=1&modestbranding=1&rel=0&showinfo=0`
   },
   fetchYoutubeData() {
     var id = this.props.videoId;
+    var that = this;
 
     ajax.get({
       url: `//gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`,
@@ -91,26 +122,12 @@ module.exports = React.createClass({
         var gallery = res.entry['media$group']['media$thumbnail'];
         var thumb = gallery.sort((a, b) => b.width - a.width)[0].url;
 
-        this.setState({
+        that.setState({
           thumb: thumb,
           imageLoaded: true
         })
       },
-      onError: this.props.onError
-    });
-  },
-  fetchVimeoData() {
-    var id = this.props.videoId;
-
-    ajax.get({
-      url: `//vimeo.com/api/v2/video/${id}.json`,
-      onSuccess(err, res) {
-        this.setState({
-          thumb: res[0].thumbnail_large,
-          imageLoaded: true
-        });
-      },
-      onError: this.props.onError
+      onError: that.props.onError
     });
   }
 });
