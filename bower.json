@@ -1,6 +1,6 @@
 {
   "name": "react-video",
-  "version": "1.5.0",
+  "version": "1.5.3",
   "description": "React component to load video from Vimeo or Youtube across any device",
   "homepage": "https://github.com/pedronauck/react-video",
   "authors": [
