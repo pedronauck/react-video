@@ -29,9 +29,26 @@ module.exports = React.createClass({
   isVimeo() {
     return this.props.from === 'vimeo' || !isNaN(this.props.videoId);
   },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.className !== this.props.className || nextProps.from !== this.props.from || nextProps.videoId !== this.props.videoId) {
+      this.setState({
+        thumb: null,
+        imageLoaded: false,
+        showingVideo: false
+      });
+    }
+  },
   componentDidMount() {
-    this.isYoutube() && this.fetchYoutubeData();
-    this.isVimeo() && this.fetchVimeoData();
+    if (!this.state.imageLoaded) {
+      this.isYoutube() && this.fetchYoutubeData();
+      this.isVimeo() && this.fetchVimeoData();
+    }
+  },
+  componentDidUpdate() {
+    if (!this.state.imageLoaded) {
+      this.isYoutube() && this.fetchYoutubeData();
+      this.isVimeo() && this.fetchVimeoData();
+    }
   },
   render() {
     return (
@@ -65,7 +82,7 @@ module.exports = React.createClass({
     if (this.state.showingVideo) {
       return (
         <div className='video-embed' style={embedVideoStyle}>
-          <iframe frameborder='0' src={this.getIframeUrl()}></iframe>
+          <iframe frameBorder='0' src={this.getIframeUrl()}></iframe>
         </div>
       );
     }
@@ -84,6 +101,7 @@ module.exports = React.createClass({
   },
   fetchYoutubeData() {
     var id = this.props.videoId;
+    var that = this;
 
     ajax.get({
       url: `//gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`,
@@ -91,26 +109,27 @@ module.exports = React.createClass({
         var gallery = res.entry['media$group']['media$thumbnail'];
         var thumb = gallery.sort((a, b) => b.width - a.width)[0].url;
 
-        this.setState({
+        that.setState({
           thumb: thumb,
           imageLoaded: true
         })
       },
-      onError: this.props.onError
+      onError: that.props.onError
     });
   },
   fetchVimeoData() {
     var id = this.props.videoId;
+    var that = this;
 
     ajax.get({
       url: `//vimeo.com/api/v2/video/${id}.json`,
       onSuccess(err, res) {
-        this.setState({
+        that.setState({
           thumb: res[0].thumbnail_large,
           imageLoaded: true
         });
       },
-      onError: this.props.onError
+      onError: that.props.onError
     });
   }
 });

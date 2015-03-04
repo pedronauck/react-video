@@ -93,14 +93,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isVimeo:function() {
 	    return this.props.from === 'vimeo' || !isNaN(this.props.videoId);
 	  },
+	  componentWillReceiveProps:function(nextProps) {
+	    if (nextProps.className !== this.props.className || nextProps.from !== this.props.from || nextProps.videoId !== this.props.videoId) {
+	      this.setState({
+	        thumb: null,
+	        imageLoaded: false,
+	        showingVideo: false
+	      });
+	    }
+	  },
 	  componentDidMount:function() {
-	    this.isYoutube() && this.fetchYoutubeData();
-	    this.isVimeo() && this.fetchVimeoData();
+	    if (!this.state.imageLoaded) {
+	      this.isYoutube() && this.fetchYoutubeData();
+	      this.isVimeo() && this.fetchVimeoData();
+	    }
+	  },
+	  componentDidUpdate:function() {
+	    if (!this.state.imageLoaded) {
+	      this.isYoutube() && this.fetchYoutubeData();
+	      this.isVimeo() && this.fetchVimeoData();
+	    }
 	  },
 	  render:function() {
 	    return (
-	      React.DOM.div({className: this.props.className}, 
-	        !this.state.imageLoaded && Spinner(null), 
+	      React.createElement("div", {className: this.props.className},
+	        !this.state.imageLoaded && React.createElement(Spinner, null),
 	        this.renderImage(), 
 	        this.renderIframe()
 	      )
@@ -113,8 +130,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (this.state.imageLoaded && !this.state.showingVideo) {
 	      return (
-	        React.DOM.div({className: "video-image", style: style}, 
-	          PlayButton({onClick: this.playVideo})
+	        React.createElement("div", {className: "video-image", style: style},
+	          React.createElement(PlayButton, {onClick: this.playVideo})
 	        )
 	      );
 	    }
@@ -128,8 +145,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (this.state.showingVideo) {
 	      return (
-	        React.DOM.div({className: "video-embed", style: embedVideoStyle}, 
-	          React.DOM.iframe({frameborder: "0", src: this.getIframeUrl()})
+	        React.createElement("div", {className: "video-embed", style: embedVideoStyle},
+	          React.createElement("iframe", {frameBorder: "0", src: this.getIframeUrl()})
 	        )
 	      );
 	    }
@@ -148,6 +165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  fetchYoutubeData:function() {
 	    var id = this.props.videoId;
+	    var that = this;
 
 	    ajax.get({
 	      url: ("//gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=json"),
@@ -155,26 +173,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var gallery = res.entry['media$group']['media$thumbnail'];
 	        var thumb = gallery.sort(function(a, b)  {return b.width - a.width;})[0].url;
 
-	        this.setState({
+	        that.setState({
 	          thumb: thumb,
 	          imageLoaded: true
 	        })
 	      },
-	      onError: this.props.onError
+	      onError: that.props.onError
 	    });
 	  },
 	  fetchVimeoData:function() {
 	    var id = this.props.videoId;
+	    var that = this;
 
 	    ajax.get({
 	      url: ("//vimeo.com/api/v2/video/" + id + ".json"),
 	      onSuccess:function(err, res) {
-	        this.setState({
+	        that.setState({
 	          thumb: res[0].thumbnail_large,
 	          imageLoaded: true
 	        });
 	      },
-	      onError: this.props.onError
+	      onError: that.props.onError
 	    });
 	  }
 	});
@@ -260,15 +279,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/** @jsx React.DOM */var React = __webpack_require__(1);
 
-	module.exports = React.createClass({displayName: 'exports',
+	module.exports = React.createClass({displayName: "exports",
 	  propTypes: {
 	    onClick: React.PropTypes.func
 	  },
 	  render:function() {
 	    return (
-	      React.DOM.button({type: "button", className: "video-play-button", onClick: this.props.onClick}, 
-	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", version: "1.1", viewBox: "0 0 100 100"}, 
-	          React.DOM.path({d: "M79.674,53.719c2.59-2.046,2.59-5.392,0-7.437L22.566,1.053C19.977-0.993,18,0.035,18,3.335v93.331c0,3.3,1.977,4.326,4.566,2.281L79.674,53.719z"})
+	      React.createElement("button", {type: "button", className: "video-play-button", onClick: this.props.onClick},
+	        React.createElement("svg", {xmlns: "http://www.w3.org/2000/svg", version: "1.1", viewBox: "0 0 100 100"},
+	          React.createElement("path", {d: "M79.674,53.719c2.59-2.046,2.59-5.392,0-7.437L22.566,1.053C19.977-0.993,18,0.035,18,3.335v93.331c0,3.3,1.977,4.326,4.566,2.281L79.674,53.719z"})
 	        )
 	      )
 	    );
@@ -282,13 +301,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/** @jsx React.DOM */var React = __webpack_require__(1);
 
-	module.exports = React.createClass({displayName: 'exports',
+	module.exports = React.createClass({displayName: "exports",
 	  render:function() {
 	    return (
-	      React.DOM.div({className: "video-loading"}, 
-	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 32 32", width: "32", height: "32"}, 
-	          React.DOM.path({opacity: ".25", d: "M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"}), 
-	          React.DOM.path({d: "M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z"})
+	      React.createElement("div", {className: "video-loading"},
+	        React.createElement("svg", {xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 32 32", width: "32", height: "32"},
+	          React.createElement("path", {opacity: ".25", d: "M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"}),
+	          React.createElement("path", {d: "M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z"})
 	        )
 	      )
 	    );
