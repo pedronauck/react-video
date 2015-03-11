@@ -46,7 +46,7 @@
       "json"
     ]
   },
-  "peerDependencies": {
+  "dependencies": {
     "react": ">=0.12.2"
   },
   "devDependencies": {
