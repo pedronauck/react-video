@@ -52,7 +52,7 @@ module.exports = React.createClass({
   },
   render() {
     return (
-      <div className={this.props.className} >
+      <div className={this.props.className} style={this.props.style} >
         {!this.state.imageLoaded && <Spinner />}
         {this.renderImage()}
         {this.renderIframe()}

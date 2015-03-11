@@ -19,41 +19,41 @@
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -116,8 +116,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  render:function() {
 	    return (
-	      React.DOM.div({className: this.props.className}, 
-	        !this.state.imageLoaded && Spinner(null), 
+	      React.createElement("div", {className: this.props.className, style: this.props.style}, 
+	        !this.state.imageLoaded && React.createElement(Spinner, null), 
 	        this.renderImage(), 
 	        this.renderIframe()
 	      )
@@ -130,8 +130,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (this.state.imageLoaded && !this.state.showingVideo) {
 	      return (
-	        React.DOM.div({className: "video-image", style: style}, 
-	          PlayButton({onClick: this.playVideo})
+	        React.createElement("div", {className: "video-image", style: style}, 
+	          React.createElement(PlayButton, {onClick: this.playVideo})
 	        )
 	      );
 	    }
@@ -145,8 +145,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (this.state.showingVideo) {
 	      return (
-	        React.DOM.div({className: "video-embed", style: embedVideoStyle}, 
-	          React.DOM.iframe({frameBorder: "0", src: this.getIframeUrl()})
+	        React.createElement("div", {className: "video-embed", style: embedVideoStyle}, 
+	          React.createElement("iframe", {frameBorder: "0", src: this.getIframeUrl()})
 	        )
 	      );
 	    }
@@ -279,15 +279,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/** @jsx React.DOM */var React = __webpack_require__(1);
 
-	module.exports = React.createClass({displayName: 'exports',
+	module.exports = React.createClass({displayName: "exports",
 	  propTypes: {
 	    onClick: React.PropTypes.func
 	  },
 	  render:function() {
 	    return (
-	      React.DOM.button({type: "button", className: "video-play-button", onClick: this.props.onClick}, 
-	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", version: "1.1", viewBox: "0 0 100 100"}, 
-	          React.DOM.path({d: "M79.674,53.719c2.59-2.046,2.59-5.392,0-7.437L22.566,1.053C19.977-0.993,18,0.035,18,3.335v93.331c0,3.3,1.977,4.326,4.566,2.281L79.674,53.719z"})
+	      React.createElement("button", {type: "button", className: "video-play-button", onClick: this.props.onClick}, 
+	        React.createElement("svg", {xmlns: "http://www.w3.org/2000/svg", version: "1.1", viewBox: "0 0 100 100"}, 
+	          React.createElement("path", {d: "M79.674,53.719c2.59-2.046,2.59-5.392,0-7.437L22.566,1.053C19.977-0.993,18,0.035,18,3.335v93.331c0,3.3,1.977,4.326,4.566,2.281L79.674,53.719z"})
 	        )
 	      )
 	    );
@@ -301,13 +301,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/** @jsx React.DOM */var React = __webpack_require__(1);
 
-	module.exports = React.createClass({displayName: 'exports',
+	module.exports = React.createClass({displayName: "exports",
 	  render:function() {
 	    return (
-	      React.DOM.div({className: "video-loading"}, 
-	        React.DOM.svg({xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 32 32", width: "32", height: "32"}, 
-	          React.DOM.path({opacity: ".25", d: "M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"}), 
-	          React.DOM.path({d: "M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z"})
+	      React.createElement("div", {className: "video-loading"}, 
+	        React.createElement("svg", {xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 32 32", width: "32", height: "32"}, 
+	          React.createElement("path", {opacity: ".25", d: "M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"}), 
+	          React.createElement("path", {d: "M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z"})
 	        )
 	      )
 	    );
@@ -318,3 +318,4 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ }
 /******/ ])
 });
+;
