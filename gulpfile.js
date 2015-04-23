@@ -46,12 +46,11 @@ gulp.task('css', function () {
       .pipe(header(require('./utils/banner')))
       .pipe(gulp.dest('./dist'));
   }
-  else {
-    return gulp.src('./lib/*.styl')
-      .pipe(stylus({ use: [nib()], errors: true }))
-      .pipe(header(require('./utils/banner')))
-      .pipe(gulp.dest('./dist'));
-  }
+
+  return gulp.src('./lib/*.styl')
+    .pipe(stylus({ use: [nib()], errors: true }))
+    .pipe(header(require('./utils/banner')))
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('server', function() {
