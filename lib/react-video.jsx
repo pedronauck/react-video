@@ -9,7 +9,8 @@ module.exports = React.createClass({
   propTypes: {
     from: React.PropTypes.oneOf(['youtube', 'vimeo']),
     videoId: React.PropTypes.string.isRequired,
-    onError: React.PropTypes.func
+    onError: React.PropTypes.func,
+    params: React.PropTypes.object
   },
   getDefaultProps() {
     return {
@@ -91,12 +92,25 @@ module.exports = React.createClass({
     this.setState({ showingVideo: true });
     ev.preventDefault();
   },
+  addParamsToUrl(url) {
+    var params = {autoplay:1};
+    var queryParts = [];
+    if (this.props.params != null) {
+      for (var key in this.props.params) {
+        var value = this.props.params[key];
+        queryParts.push([encodeURIComponent(key), '=', encodeURIComponent(value)].join(''));
+      }
+    }
+    url += '?' + queryParts.join('&')
+  },
   getIframeUrl() {
     if (this.isYoutube()) {
-      return `//youtube.com/embed/${this.props.videoId}?autoplay=1`
+      var url = `//youtube.com/embed/${this.props.videoId}`
+      return this.addParamsToUrl(url)
     }
     else if (this.isVimeo()) {
-      return `//player.vimeo.com/video/${this.props.videoId}?autoplay=1`
+      var url = `//player.vimeo.com/video/${this.props.videoId}`
+      return this.addParamsToUrl(url)
     }
   },
   fetchYoutubeData() {
