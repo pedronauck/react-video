@@ -101,21 +101,10 @@ module.exports = React.createClass({
   },
   fetchYoutubeData() {
     var id = this.props.videoId;
-    var that = this;
-
-    ajax.get({
-      url: `//gdata.youtube.com/feeds/api/videos/${id}?v=2&alt=json`,
-      onSuccess(err, res) {
-        var gallery = res.entry['media$group']['media$thumbnail'];
-        var thumb = gallery.sort((a, b) => b.width - a.width)[0].url;
-
-        that.setState({
-          thumb: thumb,
-          imageLoaded: true
-        })
-      },
-      onError: that.props.onError
-    });
+    this.setState({
+      thumb: `http://img.youtube.com/vi/${id}/1.jpg`,
+      imageLoaded: true
+    })
   },
   fetchVimeoData() {
     var id = this.props.videoId;
