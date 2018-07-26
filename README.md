@@ -46,7 +46,7 @@ Using the component is simpler than installing. See an example with [browserify]
   );
 ```
 
-The property `videoId` is optional, so you can use it or not. If you don't pass the property, the component will select your type of video based on your id.
+The property `from` is optional. If you don't pass the property, the component will select the video provider based on the id.
 
 ```javascript
   React.render(
@@ -55,7 +55,7 @@ The property `videoId` is optional, so you can use it or not. If you don't pass 
   );
 ```
 
-To handle errors when something happens, like your video can't be loaded, you can pass a callback with a prop `onError` in the component:
+To handle errors when something wrong happens, like your video can't be loaded, you can pass a callback with a prop `onError` in the component:
 
 ```javascript
   var _onError = function(err) {
