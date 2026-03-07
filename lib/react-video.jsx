@@ -9,7 +9,8 @@ module.exports = React.createClass({
   propTypes: {
     from: React.PropTypes.oneOf(['youtube', 'vimeo']),
     videoId: React.PropTypes.string.isRequired,
-    onError: React.PropTypes.func
+    onError: React.PropTypes.func,
+    style: React.PropTypes.object
   },
   getDefaultProps() {
     return {
@@ -52,7 +53,7 @@ module.exports = React.createClass({
   },
   render() {
     return (
-      <div className={this.props.className} >
+      <div className={this.props.className} style={this.props.style} >
         {!this.state.imageLoaded && <Spinner />}
         {this.renderImage()}
         {this.renderIframe()}
